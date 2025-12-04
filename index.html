@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel=""
+        href="">
+    <link rel="" href="">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --primary-dark: #343944;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-top: 140px;
+            overflow-x: hidden;
+        }
+
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background-color: rgba(255, 255, 255, 0.98);
+            transition: var(--transition);
+        }
+
+        .fixed-header.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-top {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .menu-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--primary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .header-bottom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .header-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .hero {
+            padding: 80px 0 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            background-color: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gray);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .products-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-badge.new {
+            background-color: #10b981;
+        }
+
+        .product-badge.sale {
+            background-color: #ef4444;
+        }
+
+        .product-badge.best {
+            background-color: #8b5cf6;
+        }
+
+        .product-image {
+            height: 260px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .product-image img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .product-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-old-price {
+            font-size: 16px;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-top: 2px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+            transform: rotate(90deg);
+        }
+
+        .categories {
+            padding: 60px 0;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .category-card {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .category-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .newsletter {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius);
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 70px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 15px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: var(--radius);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--gray);
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .modal-body {
+                flex-direction: row;
+                gap: 40px;
+            }
+        }
+
+        .modal-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: var(--radius);
+            background-color: var(--light-gray);
+            padding: 40px;
+            min-height: 400px;
+        }
+
+        .modal-image img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .modal-info {
+            flex: 1;
+        }
+
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .modal-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-description {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .modal-features {
+            margin-bottom: 25px;
+        }
+
+        .modal-features h4 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .modal-features ul {
+            padding-left: 20px;
+            color: var(--gray);
+        }
+
+        .modal-features li {
+            margin-bottom: 8px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .modal-actions .cta-button {
+            flex: 1;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 50px;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--primary);
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .quantity-btn:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .quantity-value {
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .header-title {
+                font-size: 30px;
+            }
+
+            .product-image {
+                height: 240px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-container {
+                padding: 0 20px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .header-title {
+                font-size: 26px;
+            }
+
+            .header-subtitle {
+                font-size: 16px;
+                padding: 0 15px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+            .product-image {
+                height: 220px;
+                padding: 10px;
+            }
+
+            .modal-image {
+                padding: 20px;
+                min-height: 300px;
+            }
+
+            .modal-image img {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .header-bottom {
+                padding: 15px 0;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="fixed-header">
+        <div class="header-top">
+            <div class="menu-container">
+                <div class="logo">
+                    <i class="fas fa-laptop"></i>
+                    Adidas
+                </div>
+                <div class="nav-links">
+                    <a href="#home">Главная</a>
+                    <a href="#products">Товары</a>
+                    <a href="#categories">О нас</a>
+                    <a href="#features">Каталог</a>
+                    <a href="#contact">Контакты</a>
+                </div>
+                <div class="menu-actions">
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom" id="home">
+            <h1 class="header-title">Инновационные товары</h1>
+            <p class="header-subtitle">Откройте для себя весь мир</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Adidas предлагает широкий ассортимент спортивной одежды, охватывающий практически все виды спорта и активностей. <span> которые вдохновляют нас</span></h1>
+                <p class="hero-description">
+                    Adidas активно использует современные технологии в своих материалах и конструкциях, чтобы улучшить производительность и комфорт.
+                </p>
+                <a href="#products" class="cta-button">Смотреть все</a>
+            </div>
+            <div class="hero-visual">
+                <img src="c:\Users\Designer 309\Downloads\Снимок экрана_3-12-2025_134555_yandex.ru.jpeg"
+                    alt="Электроника" class="hero-image">
+            </div>
+        </section>
+        <section class="products-section" id="products">
+            <h2 class="section-title">Популярные товары</h2>
+            <p class="section-subtitle">Выберите все из нашей коллекции Adidas</p>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все товары</button>
+                <button class="filter-btn" data-filter="smartphones">Новинки</button>
+                <button class="filter-btn" data-filter="laptops">Каталог</button>
+                <button class="filter-btn" data-filter="audio">Мужчинам</button>
+                <button class="filter-btn" data-filter="wearables">Детям</button>
+                <button class="filter-btn" data-filter="gaming">Женщинам</button>
+            </div>
+            <div class="products-grid" id="products-container">
+            </div>
+        </section>
+        <section class="categories" id="categories">
+            <h2 class="section-title">Категория товаров</h2>
+            <p class="section-subtitle">Исследуйте наш широкий ассортимент по категориям</p>
+
+            <div class="categories-grid">
+                <div class="category-card" data-category="smartphones">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="category-title">Спортивные одежды</h3>
+                    <p>Всё для вашего спорта – от старта до финиша.</p>
+                </div>
+
+                <div class="category-card" data-category="laptops">
+                    <div class="category-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="category-title">Мужчинам</h3>
+                    <p>На любой вкус</p>
+                </div>
+
+                <div class="category-card" data-category="tv">
+                    <div class="category-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 class="category-title">Товары</h3>
+                    <p>Найдите свою идеальную спортивную экипировку</p>
+                </div>
+
+                <div class="category-card" data-category="photo">
+                    <div class="category-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="category-title">Детям</h3>
+                    <p>Выбор для начинающих и профессионалов</p>
+                </div>
+            </div>
+        </section>
+        <section class="features" id="features">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <p class="section-subtitle">Мы заботимся о каждом клиенте и предлагаем все лучшее</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="feature-title">Быстрая доставка</h3>
+                    <p>Доставляем заказы в течение 1-3 дней по всей стране. Бесплатная доставка от $100.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Качества</h3>
+                    <p>Все товары подходят.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Поддержка 24/7</h3>
+                    <p>Наша служба поддержки всегда готова помочь с любыми вопросами.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3 class="feature-title">Легкий возврат</h3>
+                    <p>Возврат товара в течение 30 дней без объяснения причин.</p>
+                </div>
+            </div>
+        </section>
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h2 class="newsletter-title">Будьте в курсе новинок</h2>
+                <p class="newsletter-description">
+                    Подпишитесь на рассылку и первыми узнавайте о новых поступлениях, специальных предложениях и
+                    эксклюзивных скидках.
+                </p>
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Ваш email адрес">
+                    <button class="cta-button">Подписаться</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Adidas</h3>
+                <p>Лучшие тспортивные одежды для вашей жизни. Мы предлагаем качественные спортивную одежду Adidas, разработанную для максимального комфорта и долговечности.
+                     с гарантией и отличным сервисом.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Категории товаров</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-filter="smartphones">Спортивные одежды</a></li>
+                    <li><a href="#" data-filter="laptops">Ботосы</a></li>
+                    <li><a href="#" data-filter="audio">Футболки</a></li>
+                    <li><a href="#" data-filter="wearables">Кепки</a></li>
+                    <li><a href="#" data-filter="photo">Шорты</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Помощь</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантия и возврат</a></li>
+                    <li><a href="#">Частые вопросы</a></li>
+                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">О компании</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                     <li><i class="fas fa-map-marker-alt"></i> Нальчик, ул. Кирова д1</li>
+                    <li><i class="fas fa-phone"></i> +7(8662)-42-90-37</li>
+                    <li><i class="fas fa-envelope"></i> </li>
+                    <li><i class="fas fa-clock"></i> Пн-Вс: 10:00-21:00 <br> без перерыва</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy;Аликберов Ильяс.</p>
+        </div>
+    </footer>
+    <div class="product-modal" id="product-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div class="modal-body" id="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+               id: 1,
+                name: "Спортивный костюм Adidas",
+                category: "",
+                price: 999,
+                oldPrice: 1099,
+                rating: 4.8,
+                badge: "new",
+                image: "c:\Users\Designer 309\Downloads\i (55).webp",
+                description: "Классический спортивный костюм Adidas в лаконичном черном цвете. Куртка на молнии с высоким воротником-стойкой и фирменным логотипом Adidas. Брюки с эластичным поясом и узнаваемыми тремя полосками по бокам. Идеальный выбор для тренировок и повседневной носки, сочетающий в себе комфорт и узнаваемый спортивный стиль..",
+                features: [
+                    "Спортивный костюм Adidas″",
+                    "Мужской",
+                    "Тренировки, разминка, повседневная носка, активный отдых",
+                    "100% полиэстер",
+                    "Классический",
+                    "Удобная посадка"
+                ]
+            },
+            {
+                id: 2,
+                name: "Спортивный костюм Adidas",
+                category: "",
+                price: 1199,
+                oldPrice: 1299,
+                rating: 4.7,
+                badge: "sale",
+                image: "c:\Users\Designer 309\Downloads\orig (10).webp",
+                description: " Мягкий и приятный к телу материал обеспечивает свободу движений во время тренировок и активного отдыха. Куртка с удобными карманами на молнии позволяет надежно хранить мелочи..",
+                features: [
+                    "Спортивный костюм Adidas″",
+                    "Мужской",
+                    "Тренировки, активный отдых, повседневная носка",
+                    "100% полиэстер",
+                    "Прямой крой",
+                    "черный"
+                ]
+            },
+            {
+                id: 3,
+                name: "Adidas Contrast″ ",
+                category: "",
+                price: 3499,
+                oldPrice: 0,
+                rating: 4.9,
+                badge: "best",
+                image: "c:\Users\Designer 309\Downloads\eYsrMd3g5689bP5Y.jpg",
+                description: "Яркое сочетание контрастных цветов и культового дизайна. Белая куртка с чёрными акцентами выглядет свежо и современно. Удобные чёрные брюки с фирменными полосками завершают образ, подчёркивая любовь к спортивному стилю.",
+                features: [
+                    " Спортивный костюм",
+                    "Мужской″",
+                    "Тренировки, активный отдых, повседневная носка",
+                    "100% полиэстер",
+                    "Эластичный, с регулируемым шнурком",
+                    "Контрастный дизайн"
+                ]
+            },
+            {
+                id: 4,
+                name: "Костюм спортивный x",
+                category: "",
+                price: 1899,
+                oldPrice: 2099,
+                rating: 4.6,
+                badge: "sale",
+                image: "c:\Users\Designer 309\Downloads\5d285359a09cd591b93952f9.jpg",
+                description: "Яркий спортивный костюм в стиле Adidas. Белая куртка с красными акцентами и красные брюки с тремя полосками создают стильный и узнаваемый образ. Удобный и функциональный комплект для занятий спортом и активного отдыха.",
+                features: [
+                    "Спортивный костюм",
+                    "Женский",
+                    "Комфортная посадка",
+                    "Функциональный дизайн",
+                    "Стильный внешний вид",
+                    "100% полиэстер"
+                ]
+            },
+            {
+                id: 5,
+                name: "Кроссовки Adidas",
+                category: "",
+                price: 399,
+                oldPrice: 0,
+                rating: 4.8,
+                badge: "new",
+                image: "c:\Users\Designer 309\Downloads\orig (8).webp",
+                description: "Эти кроссовки, вдохновленные культовой моделью Gazelle, выполнены с использованием дышащего материала  для оптимальной вентиляции и комфорта. ",
+                features: [
+                    "Кроссовки",
+                    "Чёрный",
+                    "Резиновая, износостойка",
+                    "Мягкая, фмортизирующая",
+                    "Спортивный",
+                    "Лёгкие и удобные"
+                ]
+            },
+            {
+                id: 6,
+                name: "Кепка Adidas",
+                category: "",
+                price: 249,
+                oldPrice: 279,
+                rating: 4.7,
+                badge: "sale",
+                image: "c:\Users\Designer 309\Downloads\orig (7).webp",
+                description: "Стильная чёрная бейсболка в спортивном стиле с фирменным логотипом и тремя контрастными полосками на козырьке.",
+                features: [
+                    "Бейсболка",
+                    "Спортивный",
+                    "Чёрный",
+                    "Текстиль",
+                    "Мужской",
+                    "Защита от солнца"
+                ]
+            },
+            {
+                id: 7,
+                name: "Куртка Adidas",
+                category: "",
+                price: 429,
+                oldPrice: 0,
+                rating: 4.8,
+                badge: "new",
+                image: "c:\Users\Designer 309\Downloads\s-l1600.jpg",
+                description: "Стильная тёплая куртка в спортивном стиле с капюшоном. Выполнена в классическом чёрном цвете с фирменными полосами на рукавах и логотипом.",
+                features: [
+                    "Зимняя куртка",
+                    "Спортивный",
+                    "Синтетический утеплитель",
+                    "Удлинённая",
+                    "Мужская",
+                    "Удобная посадка"
+                ]
+            },
+            {
+                id: 8,
+                name: "Шорты Adidas",
+                category: "",
+                price: 369,
+                oldPrice: 399,
+                rating: 4.6,
+                badge: "sale",
+                image: "c:\Users\Designer 309\Downloads\6354723964.jpg",
+                description: "Спортивные шорты Adidas с характерными белыми полосами по бокам и фирменным логотипом в нмжнем углу.",
+                features: [
+                    "Синтетический материал″",
+                    "Обеспечивающий лёгкость",
+                    "Эластичный пояс",
+                    "Три боковые белые полосы",
+                    "Логотип бренда",
+                    "Диапазон размера от XS lj XXL"
+                ]
+            },
+            {
+                id: 9,
+                name: "Перчатки Adidas  ",
+                category: "",
+                price: 499,
+                oldPrice: 0,
+                rating: 4.9,
+                badge: "best",
+                image: "c:\Users\Designer 309\Downloads\orig (6).webp",
+                description: "Минималистичный дизайн, ярко выраженный белый логотип Adidas.",
+                features: [
+                    "Спортивные перчатки",
+                    "Чёрные с белым логотипом на тыльной стороне",
+                    "Элестичная манжета ",
+                    "Минималистичный дизайн",
+                    "Для занятия спортом в холодную погоду",
+                    "Фирменный логотип "
+                ]
+            },
+            {
+                id: 10,
+                name: "Маска Adidas",
+                category: "",
+                price: 349,
+                oldPrice: 0,
+                rating: 4.7,
+                badge: "new",
+                image: "c:\Users\Designer 309\Downloads\adf5a2462ab2b6b05fd0232486a14aa5.jpeg",
+                description: "Балаклава Adidas Alphaskin в чёрном цвете — это стильный и функциональный аксессуар для холодного времени года. Выполнена в лаконичном дизайне с фирменным логотипом Adidas.",
+                features: [
+                    "Маска″",
+                    "Чёрный",
+                    "Классическая форма балаклавы",
+                    "Лаконичный и функциональный дизайн с фирменным логотипом Adidas",
+                    "сетчатая передняя панель для улучшенной вентиляции",
+                    "Утеплённая модель с флисовой подкладкой"
+                ]
+            },
+            {
+                id: 11,
+                name: "Очки Adidas ",
+                category: "",
+                price: 2499,
+                oldPrice: 2699,
+                rating: 4.8,
+                badge: "sale",
+                image: "c:\Users\Designer 309\Downloads\0095-21z-size_700_webp (1).webp",
+                description: "Эти солнцезащитные очки Adidas выполнены в современном спортивном дизайне, сочетающем функциональность и стиль. Модель отличается лаконичной чёрной оправой из прочного и лёгкого материала.",
+                features: [
+                    "Защищает глаза от яркого солнечного света",
+                    "Очки плотно прилегают к лицу",
+                    "На заушнике подчёркивает принадлежность к известному бренду",
+                    "обеспечивает дополнительную фиксацию и комфорт",
+                    "Способствуют надёжной посадке",
+                    "Современный спортивный стиль"
+                ]
+            },
+            {
+                id: 12,
+                name: "Сумка Adidas ",
+                category: "",
+                price: 759,
+                oldPrice: 0,
+                rating: 4.9,
+                badge: "best",
+                image: "c:\Users\Designer 309\Downloads\e22b18b64fc6d72df5c74a5c9b663993.jpeg",
+                description: "Эта стильная спортивная сумка Adidas выполнена в классическом чёрном цвете и отличается лаконичным, но функциональным дизайном. На передней части сумки ярко выделяется фирменный логотип Adidas — три полоски с названием бренда, что подчёркивает её принадлежность к известному спортивному бренду..",
+                features: [
+                    "Классическая форма дорожной/спортивной сумки",
+                    "Прочный износостойкий текстиль",
+                    " Две эргономичные ручки с мягкой накладкой",
+                    "Регулируемый и съёмный, с мягкой вставкой",
+                    "Надёжная молния по верхнему краю сумки",
+                    "Основное вместительное отделение для спортивной экипировки"
+                ]
+            }
+        ];
+
+        let cartCount = 0;
+        let cartItems = [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderProducts();
+            setupFilters();
+            setupCategoryCards();
+            setupFooterFilters();
+            loadCart();
+        });
+
+        function renderProducts(filter = 'all') {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            let filteredProducts = products;
+            if (filter !== 'all') {
+                filteredProducts = products.filter(product => product.category === filter);
+            }
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.setAttribute('data-category', product.category);
+                productCard.setAttribute('data-id', product.id);
+
+                let badgeClass = '';
+                let badgeText = '';
+                if (product.badge === 'new') {
+                    badgeClass = 'new';
+                    badgeText = 'Новинка';
+                } else if (product.badge === 'sale') {
+                    badgeClass = 'sale';
+                    badgeText = 'Скидка';
+                } else if (product.badge === 'best') {
+                    badgeClass = 'best';
+                    badgeText = 'Хит';
+                }
+
+                const stars = [];
+                const fullStars = Math.floor(product.rating);
+                const hasHalfStar = product.rating % 1 >= 0.5;
+
+                for (let i = 0; i < fullStars; i++) {
+                    stars.push('<i class="fas fa-star"></i>');
+                }
+
+                if (hasHalfStar) {
+                    stars.push('<i class="fas fa-star-half-alt"></i>');
+                }
+
+                const emptyStars = 5 - stars.length;
+                for (let i = 0; i < emptyStars; i++) {
+                    stars.push('<i class="far fa-star"></i>');
+                }
+
+                const oldPriceHTML = product.oldPrice
+                    ? `<div class="product-old-price">$${product.oldPrice}</div>`
+                    : '';
+
+                productCard.innerHTML = `
+                    ${badgeText ? `<div class="product-badge ${badgeClass}">${badgeText}</div>` : ''}
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${getCategoryName(product.category)}</span>
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description.substring(0, 100)}...</p>
+                        <div class="product-footer">
+                            <div class="price-container">
+                                <div class="product-price">$${product.price}</div>
+                                ${oldPriceHTML}
+                                <div class="product-rating">
+                                    ${stars.join('')}
+                                    <span>(${product.rating})</span>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" data-id="${product.id}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(productCard);
+                productCard.addEventListener('click', (e) => {
+                    if (!e.target.closest('.add-to-cart')) {
+                        openProductModal(product.id);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    this.classList.add('active');
+                    const filter = this.getAttribute('data-filter');
+                    renderProducts(filter);
+
+                    const productsSection = document.getElementById('products');
+                    const headerHeight = document.querySelector('.fixed-header').offsetHeight;
+                    window.scrollTo({
+                        top: productsSection.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+
+        function setupCategoryCards() {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const category = this.getAttribute('data-category');
+
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-filter') === category) {
+                            btn.classList.add('active');
+                        }
+                    });
+
+                    renderProducts(category);
+                    const productsSection = document.getElementById('products');
+                    const headerHeight = document.querySelector('.fixed-header').offsetHeight;
+                    window.scrollTo({
+                        top: productsSection.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+
+        function setupFooterFilters() {
+            document.querySelectorAll('.footer-links a[data-filter]').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const category = this.getAttribute('data-filter');
+
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-filter') === category) {
+                            btn.classList.add('active');
+                        }
+                    });
+
+                    renderProducts(category);
+                    const productsSection = document.getElementById('products');
+                    const headerHeight = document.querySelector('.fixed-header').offsetHeight;
+                    window.scrollTo({
+                        top: productsSection.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'smartphones': 'Смартфоны',
+                'laptops': 'Ноутбуки',
+                'audio': 'Аудио',
+                'wearables': 'Умные часы',
+                'gaming': 'Игры',
+                'photo': 'Фото/Видео'
+            };
+            return categories[category] || category;
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            cartCount++;
+            document.querySelector('.cart-count').textContent = cartCount;
+
+            cartItems.push(product);
+
+            const button = document.querySelector(`.add-to-cart[data-id="${productId}"]`);
+            if (button) {
+                button.style.backgroundColor = '#10b981';
+                button.innerHTML = '<i class="fas fa-check"></i>';
+
+                setTimeout(() => {
+                    button.style.backgroundColor = '';
+                    button.innerHTML = '<i class="fas fa-plus"></i>';
+                }, 1500);
+            }
+
+            showNotification(`${product.name} добавлен в корзину!`);
+
+            saveCart();
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('product-modal');
+            const modalBody = document.getElementById('modal-body');
+
+            const stars = [];
+            const fullStars = Math.floor(product.rating);
+            const hasHalfStar = product.rating % 1 >= 0.5;
+
+            for (let i = 0; i < fullStars; i++) {
+                stars.push('<i class="fas fa-star"></i>');
+            }
+
+            if (hasHalfStar) {
+                stars.push('<i class="fas fa-star-half-alt"></i>');
+            }
+
+            const emptyStars = 5 - stars.length;
+            for (let i = 0; i < emptyStars; i++) {
+                stars.push('<i class="far fa-star"></i>');
+            }
+
+            modalBody.innerHTML = `
+                <div class="modal-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="modal-info">
+                    <span class="product-category">${getCategoryName(product.category)}</span>
+                    <h2 class="modal-title">${product.name}</h2>
+                    <div class="modal-price">
+                        $${product.price}
+                        ${product.oldPrice ? `<span style="font-size: 20px; color: var(--gray); text-decoration: line-through; margin-left: 10px;">$${product.oldPrice}</span>` : ''}
+                    </div>
+                    <div class="product-rating">
+                        ${stars.join('')}
+                        <span>(${product.rating})</span>
+                    </div>
+                    <p class="modal-description">${product.description}</p>
+                    <div class="modal-features">
+                        <h4>Характеристики:</h4>
+                        <ul>
+                            ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="modal-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <span class="quantity-value">1</span>
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="cta-button" id="modal-add-to-cart">Добавить в корзину</button>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            document.getElementById('modal-add-to-cart').addEventListener('click', () => {
+                addToCart(productId);
+                closeModal();
+            });
+
+            const minusBtn = modalBody.querySelector('.quantity-btn.minus');
+            const plusBtn = modalBody.querySelector('.quantity-btn.plus');
+            const quantityValue = modalBody.querySelector('.quantity-value');
+
+            minusBtn.addEventListener('click', () => {
+                let value = parseInt(quantityValue.textContent);
+                if (value > 1) {
+                    quantityValue.textContent = value - 1;
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                let value = parseInt(quantityValue.textContent);
+                quantityValue.textContent = value + 1;
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background-color: #10b981;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 9999;
+                font-weight: 600;
+                transform: translateY(100px);
+                opacity: 0;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.transform = 'translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateY(100px)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function saveCart() {
+            const cartData = {
+                count: cartCount,
+                items: cartItems
+            };
+            localStorage.setItem('techstore_cart', JSON.stringify(cartData));
+        }
+
+        function loadCart() {
+            const savedCart = localStorage.getItem('techstore_cart');
+            if (savedCart) {
+                const cartData = JSON.parse(savedCart);
+                cartCount = cartData.count || 0;
+                cartItems = cartData.items || [];
+                document.querySelector('.cart-count').textContent = cartCount;
+            }
+        }
+
+        document.querySelectorAll('.nav-links a, .cta-button').forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('.fixed-header').offsetHeight;
+                        window.scrollTo({
+                            top: targetElement.offsetTop - headerHeight,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        document.querySelector('.newsletter-form .cta-button').addEventListener('click', function (e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter-input');
+            const email = emailInput.value.trim();
+
+            if (email && validateEmail(email)) {
+                showNotification('Спасибо за подписку! Проверьте вашу почту.');
+                emailInput.value = '';
+            } else {
+                showNotification('Пожалуйста, введите корректный email адрес.');
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.fixed-header');
+            const scrolled = window.pageYOffset;
+
+            if (scrolled > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+
+</html>
+                   
